@@ -128,13 +128,18 @@ Abra um novo terminal (mantendo a API rodando):
 cd controle-gastos-front
 ```
 
-### 2️ Instale as dependências
+### 2️ Configure as Variáveis de Ambiente
+Crie uma cópia do arquivo de exemplo das variáveis de ambiente para que o React saiba onde a API está rodando:
+
+Renomeie ou copie o arquivo .env Ex para .env (a URL base padrão já está configurada para http://localhost:5001/api).
+
+### 3️ Instale as dependências
 
 ``` bash
 npm install
 ```
 
-### 3️ Execute o servidor de desenvolvimento
+### 4️ Execute o servidor de desenvolvimento
 
 ``` bash
 npm run dev
