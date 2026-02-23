@@ -133,9 +133,13 @@ const confirmarExclusao = async () => {
     await pessoasService.delete(idParaExcluir);
     mostrarAlerta("Pessoa excluída com sucesso!", "success");
     carregarPessoas();
-  } catch (error: any) {
-    mostrarAlerta(error.message || "Erro ao excluir pessoa.", "error");
-  } finally {
+  } catch (error) {
+    if (error instanceof Error) {
+      mostrarAlerta(error.message, "error");
+    } else {
+      mostrarAlerta("Erro desconhecido ao excluir pessoa.", "error");
+    }
+  }finally {
     setOpenConfirm(false);
     setIdParaExcluir(null);
   }

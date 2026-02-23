@@ -125,7 +125,7 @@ export const Categorias = () => {
             margin="normal"
             value={descricao}
             onChange={(e) => setDescricao(e.target.value)}
-            inputProps={{ maxLength: 400 }}
+            slotProps={{ htmlInput: { maxLength: 400 } }}
           />
           <FormControl fullWidth margin="normal">
             <InputLabel id="finalidade-label">Finalidade</InputLabel>

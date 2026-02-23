@@ -174,7 +174,7 @@ export const Transacoes = () => {
             margin="normal"
             value={descricao}
             onChange={(e) => setDescricao(e.target.value)}
-            inputProps={{ maxLength: 400 }}
+            slotProps={{ htmlInput: { maxLength: 400 } }}
           />
 
           <Box sx={{ display: 'flex', gap: 2, mt: 2, mb: 1 }}>
