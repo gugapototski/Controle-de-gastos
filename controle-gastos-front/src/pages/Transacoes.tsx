@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { 
   Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, 
-  Dialog, DialogTitle, DialogContent, DialogActions, TextField, Snackbar, Alert, Typography, Box,
+  Dialog, DialogTitle, DialogContent, DialogActions, TextField, Typography, Box,
   MenuItem, Select, FormControl, InputLabel
 } from '@mui/material';
 import { transacoesService } from '../api/services/transacoesService';
