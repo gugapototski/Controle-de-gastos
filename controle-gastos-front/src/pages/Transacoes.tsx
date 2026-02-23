@@ -88,7 +88,7 @@ export const Transacoes = () => {
       } else {
         mostrarAlerta('Erro desconhecido ao guardar transação.', 'error');
       }
-    }finally {
+    } finally {
       setIsSubmitting(false);
     }
   };
@@ -184,7 +184,10 @@ export const Transacoes = () => {
                 labelId="tipo-label"
                 value={tipo}
                 label="Tipo"
-                onChange={(e) => setTipo(Number(e.target.value))}
+                onChange={(e) => {
+                setTipo(Number(e.target.value));
+                setCategoriaId('');
+              }}
               >
                 <MenuItem value={1}>Despesa</MenuItem>
                 <MenuItem value={2}>Receita</MenuItem>

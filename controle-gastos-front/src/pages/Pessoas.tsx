@@ -121,7 +121,7 @@ const confirmarExclusao = async () => {
     } else {
       mostrarAlerta("Erro desconhecido ao excluir pessoa.", "error");
     }
-  }finally {
+  } finally {
     setOpenConfirm(false);
     setIdParaExcluir(null);
   }
