@@ -1,4 +1,3 @@
-// src/pages/Transacoes.tsx
 import { useState, useEffect } from 'react';
 import { 
   Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, 
@@ -16,6 +15,7 @@ export const Transacoes = () => {
   const [pessoas, setPessoas] = useState<Pessoa[]>([]);
   const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [openForm, setOpenForm] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   
   // Campos do formulário
   const [descricao, setDescricao] = useState('');
@@ -60,6 +60,8 @@ export const Transacoes = () => {
       return;
     }
 
+    setIsSubmitting(true); // Bloqueia o botão
+
     try {
       await transacoesService.create({ 
         descricao, 
@@ -79,9 +81,15 @@ export const Transacoes = () => {
       setPessoaId('');
       
       carregarDados(); // Atualiza a tabela
-    } catch (error: any) {
-      // O NOSSO MIDDLEWARE DO C# BRILHA AQUI
-      mostrarAlerta(error.message || 'Erro ao guardar transação.', 'error');
+    } catch (error) {
+      // Verifica se o erro é uma instância da classe Error (que o seu interceptor gera)
+      if (error instanceof Error) {
+        mostrarAlerta(error.message, 'error');
+      } else {
+        mostrarAlerta('Erro desconhecido ao guardar transação.', 'error');
+      }
+    }finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -209,7 +217,7 @@ export const Transacoes = () => {
         </DialogContent>
         <DialogActions sx={{ px: 3, pb: 2 }}>
           <Button onClick={() => setOpenForm(false)} color="inherit">Cancelar</Button>
-          <Button onClick={handleSalvar} variant="contained" disableElevation>Guardar</Button>
+          <Button onClick={handleSalvar} variant="contained" disableElevation disabled={isSubmitting}>{isSubmitting ? 'Guardando...' : 'Guardar'}</Button>
         </DialogActions>
       </Dialog>
 

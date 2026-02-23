@@ -12,6 +12,7 @@ import { AppSnackbar } from '../components/AppSnackbar';
 export const Categorias = () => {
   const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [openForm, setOpenForm] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   
   // Campos do formulário
   const [descricao, setDescricao] = useState('');
@@ -47,6 +48,8 @@ export const Categorias = () => {
       return;
     }
 
+    setIsSubmitting(true); // Bloqueia o botão
+
     try {
       await categoriasService.create({ descricao, finalidade });
       mostrarAlerta('Categoria registada com sucesso!', 'success');
@@ -54,8 +57,14 @@ export const Categorias = () => {
       setDescricao('');
       setFinalidade(1);
       carregarCategorias();
-    } catch (error: any) {
-      mostrarAlerta(error.message || 'Erro ao guardar categoria.', 'error');
+    } catch (error) {
+      if (error instanceof Error) {
+        mostrarAlerta(error.message, 'error');
+      } else {
+        mostrarAlerta('Erro desconhecido ao guardar categoria.', 'error');
+      }
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -134,7 +143,7 @@ export const Categorias = () => {
         </DialogContent>
         <DialogActions sx={{ px: 3, pb: 2 }}>
           <Button onClick={() => setOpenForm(false)} color="inherit">Cancelar</Button>
-          <Button onClick={handleSalvar} variant="contained" disableElevation>Guardar</Button>
+          <Button onClick={handleSalvar} variant="contained" disableElevation disabled={isSubmitting}>{isSubmitting ? 'Guardando...' : 'Guardar'}</Button>
         </DialogActions>
       </Dialog>
 

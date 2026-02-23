@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 export const http = axios.create({
-  baseURL: "http://localhost:5001/api",
+  // Utiliza a variável de ambiente do Vite, com fallback para o localhost caso falhe
+  baseURL: import.meta.env.VITE_API_URL || "http://localhost:5001/api",
   headers: {
     'Content-Type': 'application/json',
   },

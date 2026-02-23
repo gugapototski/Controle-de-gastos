@@ -30,6 +30,7 @@ import { ConfirmDialog } from "../components/ConfirmDialog";
 export const Pessoas = () => {
   const [pessoas, setPessoas] = useState<Pessoa[]>([]);
   const [openForm, setOpenForm] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);// Bloqueia o botão
 
   // Modo edição
   const [idEmEdicao, setIdEmEdicao] = useState<string | null>(null);
@@ -94,6 +95,8 @@ const [idParaExcluir, setIdParaExcluir] = useState<string | null>(null);
       return;
     }
 
+    setIsSubmitting(true);
+
     try {
       const payload = { nome, idade: Number(idade) };
 
@@ -107,8 +110,14 @@ const [idParaExcluir, setIdParaExcluir] = useState<string | null>(null);
 
       handleFecharModal();
       carregarPessoas();
-    } catch (error: any) {
-      mostrarAlerta(error.message || "Erro ao salvar pessoa.", "error");
+    } catch (error) {
+      if (error instanceof Error) {
+        mostrarAlerta(error.message, "error");
+      } else {
+        mostrarAlerta("Erro desconhecido ao salvar pessoa.", "error");
+      }
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -226,8 +235,8 @@ const confirmarExclusao = async () => {
           <Button onClick={handleFecharModal} color="inherit">
             Cancelar
           </Button>
-          <Button onClick={handleSalvar} variant="contained" disableElevation>
-            {idEmEdicao ? "Salvar Alterações" : "Salvar"}
+          <Button onClick={handleSalvar} variant="contained" disableElevation disabled={isSubmitting}>
+            {isSubmitting ? 'Salvando...' : idEmEdicao ? "Salvar Alterações" : "Salvar"}
           </Button>
         </DialogActions>
       </Dialog>
