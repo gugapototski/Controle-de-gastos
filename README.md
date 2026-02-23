@@ -159,11 +159,3 @@ A aplicação estará disponível em:
 -   Exclusão de Pessoa remove todas as suas transações (Cascade Delete).
 -   Totais por pessoa calculados diretamente no banco (GroupBy + Sum).
 
-------------------------------------------------------------------------
-
-## Diferenciais Implementados
-
--   Dashboard com gráfico comparativo Receita vs Despesa.
--   Filtro dinâmico de categorias no formulário.
--   Interceptor global no front mapeando erros do middleware do C#.
--   Arquitetura limpa, desacoplada e testável.
